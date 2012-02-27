@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Main!</string>
+
     <string name="app_name">Local Wallpaper</string>
-    
-   	<string name="updates_prompt">Change update frequency</string>
-    
+    <string name="updates_prompt">Change update frequency</string>
+
     <string-array name="updates">
         <item>250 metres</item>
         <item>500 metres</item>
@@ -12,5 +11,13 @@
         <item>5 kilometres</item>
         <item>10 kilometres</item>
     </string-array>
-    
+
+    <string name="current_wallpaper_is">Your current wallpaper is:</string>
+    <string name="NA">N/A</string>
+    <string name="was_taken_in">And it was taken in:</string>
+    <string name="not_available">Not Available</string>
+    <string name="click_to_open">Click here to open the image</string>
+    <string name="update">Update now!</string>
+    <string name="location_updates">Update my wallpaper every:</string>
+
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Main!</string>
+    <string name="app_name">Local Wallpaper</string>
+    
+   	<string name="updates_prompt">Change update frequency</string>
+    
+    <string-array name="updates">
+        <item>250 metres</item>
+        <item>500 metres</item>
+        <item>1 kilometre</item>
+        <item>5 kilometres</item>
+        <item>10 kilometres</item>
+    </string-array>
+    
+</resources>

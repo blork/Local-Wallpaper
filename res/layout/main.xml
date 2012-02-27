@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient"
+    >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient"
+    >    
+<ImageView
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:src="@drawable/logo"
+  	android:padding="10dp"
+  	android:layout_marginTop="10dp"/>
+<TextView
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="Your current wallpaper is:"
+  	android:textColor="#F0F0F0"
+  	android:padding="5dp"
+  	android:textSize="14sp"
+  	android:textStyle="bold"
+  	android:gravity="center_horizontal"/>
+ <TextView
+ 	android:id="@+id/title"
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="N/A"
+  	android:textColor="#FFFFFF"
+  	android:paddingLeft="10dp"
+  	android:paddingRight="10dp"
+  	android:textSize="28sp"
+  	android:gravity="center_horizontal"
+  	android:typeface="serif"
+  	android:shadowColor="#000000"
+  	android:shadowRadius="1.2"
+  	android:shadowDx="1.2"
+  	android:shadowDy="1.2"/> 	 	
+ <TextView
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="And it was taken in:"
+  	android:textColor="#F0F0F0"
+  	android:padding="5dp"
+  	android:textSize="14sp"
+  	android:textStyle="bold"
+  	android:gravity="center_horizontal"/> 	
+ <TextView
+ 	android:id="@+id/place"
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="Not Available"
+  	android:textColor="#FFFFFF"
+  	android:paddingLeft="10dp"
+  	android:paddingRight="10dp"
+  	android:textSize="28sp"
+  	android:gravity="center_horizontal"
+  	android:typeface="serif"
+  	android:shadowColor="#000000"
+  	android:shadowRadius="1.2"
+  	android:shadowDx="1.2"
+  	android:shadowDy="1.2"/> 	
+ <TextView
+ 	android:id="@+id/link"
+   	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="Click here to open the image"
+  	android:autoLink="all"
+  	android:visibility="gone"
+  	android:clickable="true"
+  	android:textColorLink="#FFFFFF"
+  	android:padding="5dp"
+  	android:textSize="12sp"
+  	android:gravity="center_horizontal"/> 
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+>	
+	<Button
+		android:id="@+id/update"
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="230dp"
+	    android:layout_height="wrap_content"
+	    android:text="Update now!"	    
+	    android:textSize="16dip"
+	    android:gravity="center"
+	    android:textColor="#000000"
+	/>
+	<CheckBox
+		android:id="@+id/checkbox"
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="230dp"
+	    android:layout_height="wrap_content"
+	    android:text="  Update my wallpaper"
+	    android:gravity="center_vertical"
+	    android:textColor="#F0F0F0"
+	    android:layout_below="@+id/update" />	 
+    <Spinner 
+        android:id="@+id/spinner"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/updates_prompt"
+        android:layout_below="@+id/checkbox" />
+</RelativeLayout>	
+</LinearLayout>
+</ScrollView>  	
+</LinearLayout>

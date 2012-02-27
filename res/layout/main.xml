@@ -100,7 +100,7 @@
                 <Button
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/update"
-                    android:layout_width="230dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/update"
@@ -110,7 +110,7 @@
                 <CheckBox
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/checkbox"
-                    android:layout_width="230dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/update"
                     android:gravity="center_vertical"
@@ -119,7 +119,7 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="230dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkbox"
                     android:drawSelectorOnTop="true"

@@ -1,7 +1,5 @@
 package com.blork.localwall;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -63,9 +61,6 @@ public class FlickrService extends Service implements Runnable {
 		}
 
     	Log.e(Flickr.TAG, latitude+"/"+longitude);
-//        long firstTime = SystemClock.elapsedRealtime();
-//        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-//		am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, firstTime,  AlarmManager.INTERVAL_HOUR, sender);  
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);				
 
@@ -154,91 +149,42 @@ public class FlickrService extends Service implements Runnable {
 		
  		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		try {
-			if(true){
-				nm.cancelAll();
-				
-				int icon = android.R.drawable.stat_sys_download;
-				Notification notification = new Notification(icon, "Updating Wallpaper", System.currentTimeMillis());
-				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, null, 0);
-				notification.setLatestEventInfo(this, "Updating Wallpaper", "Downloading Wallpaper.", contentIntent);
-				notification.flags = Notification.FLAG_ONGOING_EVENT^Notification.FLAG_NO_CLEAR;	
-				nm.notify(3, notification);
-			}
+			nm.cancelAll();
+			
+			int icon = android.R.drawable.stat_sys_download;
+			Notification notification = new Notification(icon, "Updating Wallpaper", System.currentTimeMillis());
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, null, 0);
+			notification.setLatestEventInfo(this, "Updating Wallpaper", "Downloading Wallpaper.", contentIntent);
+			notification.flags = Notification.FLAG_ONGOING_EVENT^Notification.FLAG_NO_CLEAR;	
+			nm.notify(3, notification);
+			
 			try {
 
-		        Flickr flickr = new Flickr();
-		        flickr.getImage(latitude, longitude);
+		        FlickrImage image = Flickr.getImage(latitude, longitude);
 		        
-		        flickr.save(this.openFileOutput(FlickrService.filename, Context.MODE_PRIVATE));
-		        FileInputStream is = openFileInput(FlickrService.filename);
-
 				WallpaperManager wm = (WallpaperManager) getSystemService(Context.WALLPAPER_SERVICE);
-				wm.setStream(is);
+				wm.setBitmap(image.getBitmap());
 				Log.i(Flickr.TAG, "Wallpaper set!");
 				
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);	
 				SharedPreferences.Editor editor = settings.edit();
-	        	editor.putString("placename", flickr.placeName);
-	        	editor.putString("title", flickr.title);
-	        	editor.putString("id", flickr.id);
-	        	editor.putString("owner", flickr.owner);
+	        	editor.putString("placename", image.getPlacename());
+	        	editor.putString("title", image.getTitle());
+	        	editor.putString("id", image.getId());
+	        	editor.putString("owner", image.getOwner());
 	            editor.commit();
-	            
-	            
-	            
-//				int icon = android.R.drawable.stat_sys_download;
-//				Notification notification = new Notification(icon, "New Picture!", System.currentTimeMillis());
-//				notification.flags = Notification.FLAG_AUTO_CANCEL;
-//				Intent notificationIntent = new Intent(this, Main.class); 
-//				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-//				notification.setLatestEventInfo(this, "New Wallpaper", flickr.placeName, contentIntent);
-//				nm.notify(1, notification);
-			} catch (SaveToStorageException e1) {	
-				e1.printStackTrace();
-				Log.d(Flickr.TAG, "Quite possibly a server issue?");        
-			            
+	                
 			} catch (BadLocationException e1) {	
 				e1.printStackTrace();
-				int icon = android.R.drawable.stat_sys_warning;
-				Notification notification = new Notification(icon, "Local Wallpaper encountered a problem.", System.currentTimeMillis());
+				icon = android.R.drawable.stat_sys_warning;
+				notification = new Notification(icon, "Local Wallpaper encountered a problem.", System.currentTimeMillis());
 				notification.flags = Notification.FLAG_AUTO_CANCEL;
 				Intent notificationIntent = new Intent(this, Main.class); 
-				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+				contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 				notification.setLatestEventInfo(this, "Local Wallpaper has encountered a problem.!", "Local Wallpaper cannot find any images near you! Try again later.", contentIntent);
-				nm.notify(2, notification);
-						        
-			} catch(IOException e1){
-					e1.printStackTrace();
-					
-					Log.d(Flickr.TAG, "Quite possibly a DNS issue.");
-					
-					
-//					int icon = android.R.drawable.stat_sys_warning;
-//					Notification notification = new Notification(icon, "Local Wallpaper couldn't find the server", System.currentTimeMillis());
-//					notification.flags = Notification.FLAG_AUTO_CANCEL;
-//									
-//					Intent notificationIntent = new Intent(this, Main.class); 
-//					PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-//					notification.setLatestEventInfo(this, "There may be a problem with your connection", "Please try running the APOD update manually.", contentIntent);
-//					nm.notify(2, notification);
-
-			} catch (Throwable e1) {	
-				e1.printStackTrace();
-				int icon = android.R.drawable.stat_sys_warning;
-
-				Notification notification = new Notification(icon, "Local Wallpaper encountered a problem.", System.currentTimeMillis());
-				notification.flags = Notification.FLAG_AUTO_CANCEL;
-				
-				Intent emailIntent = new Intent(Intent.ACTION_SEND); 
-				emailIntent.setType("message/rfc822");
-				emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"sam+market@blork.co.uk"}); 
-				emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Problem with Local Wallpaper App"); 
-				String stacktrace = getStackTraceAsString(e1);
-				emailIntent.putExtra(Intent.EXTRA_TEXT, stacktrace); 
-				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, emailIntent, 0);
-				notification.setLatestEventInfo(this, "Local Wallpaper has encountered a problem. Sorry!", "Click here to email me the debug info.", contentIntent);
-				nm.notify(2, notification);
-				
+				nm.notify(2, notification);			        
+			} catch (Exception e) {
+				Log.e(Flickr.TAG, "", e);
 			}
 		} finally{		
 			sendBroadcast(new Intent(ACTION_NEW_LOCALWALL));
